@@ -122,10 +122,9 @@ StateMachine.prototype.addState = function(state, handler) {
 StateMachine.prototype.transition = function(opts) {
 	var me = this;
 
-	opts = mixin({
-		success: 'success',
-		error: 'error',
-	}, opts || {});
+	opts = opts || {};
+	opts.success = opts.success || 'success';
+	opts.error = opts.error || 'error';
 	
 	if (undefined == opts.action) {
 		throw 'Transition added with no action';
@@ -532,6 +531,4 @@ NobleMachine.prototype.emitError = function(data) {
 	StateMachine.prototype.emitError.call(this, data);
 }
 
-_.mixin(exports, {
-	NobleMachine: NobleMachine,
-});
+exports.NobleMachine = NobleMachine;
