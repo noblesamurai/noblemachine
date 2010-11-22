@@ -167,8 +167,8 @@ StateMachine.prototype.transitionQueue = function(finalState) {
 	return new TransitionQueue(this, finalState);
 }
 
-StateMachine.prototype.linearQueue = function(finalState) {
-	return new LinearQueue(this, finalState);
+StateMachine.prototype.queue = function(finalState) {
+	return new NobleQueue(this, finalState);
 }
 
 /**
@@ -229,7 +229,7 @@ TransitionQueue.prototype.addTransition = function(transition) {
 /**
  * A linear transition queue
  */
-function LinearQueue(stateMachine, finalState) {
+function NobleQueue(stateMachine, finalState) {
 	var me = this;
 	events.EventEmitter.call(me);
 
@@ -238,9 +238,9 @@ function LinearQueue(stateMachine, finalState) {
 	me._transitions = [];
 	me._started = false;
 }
-sys.inherits(LinearQueue, events.EventEmitter);
+sys.inherits(NobleQueue, events.EventEmitter);
 
-LinearQueue.prototype.start = function() {
+NobleQueue.prototype.start = function() {
 	var me = this;
 
 	me._started = true;
@@ -253,13 +253,13 @@ LinearQueue.prototype.start = function() {
 	me.stateMachine.transition(me._transitions[0]);
 }
 
-LinearQueue.prototype.cancel = function() {
+NobleQueue.prototype.cancel = function() {
 	this._transitions.forEach(function(transition) {
 		transition.action.cancel();
 	});
 }
 
-LinearQueue.prototype.addTransition = function(transition) {
+NobleQueue.prototype.addTransition = function(transition) {
 	var me = this;
 
 	if (me._started) {
