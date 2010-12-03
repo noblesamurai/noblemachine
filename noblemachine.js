@@ -87,7 +87,6 @@ NobleMachine.prototype.makeHandler = function(funcOrAct) {
 			funcOrAct.apply(me, arguments);
 
 			if (me.state == state && !me.transitioning && me.running)  {
-				sys.log("Proceeding...");
 				me.toNext();
 			}
 		} else {
@@ -168,7 +167,7 @@ NobleMachine.prototype.go = function(args) {
 	try {
 		me.handlers[me.state].apply(me, args);
 	} catch (e) {
-		if (e.stack) sys.log(e.stack);
+		if (e.stack) NobleMachine.logger.error(e.stack);
 		if (me.state == 'error') {
 			me.emitError(e);
 		} else {
@@ -293,5 +292,7 @@ NobleMachine.prototype.emitError = function() {
 	this.emit.apply(this, ['error'].concat(
         Array.prototype.slice.call(arguments)));
 }
+
+NobleMachine.logger = { log: sys.log, warning: sys.log, error: sys.log };
 
 exports.NobleMachine = NobleMachine;
