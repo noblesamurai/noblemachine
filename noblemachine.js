@@ -260,6 +260,29 @@ NobleMachine.prototype.toNext = function() {
 }
 
 /**
+ * As above, but to the previous state.
+ */
+NobleMachine.prototype.toPrev = function() {
+	var me = this;
+
+	var nextState = me.stateIndex-1;
+	var args = Array.prototype.slice.call(arguments);
+
+	if (nextState < 0) {
+		me.toError("Tried to transition earlier than the first state?!");
+	} else {
+		me.toState.apply(me, [nextState].concat(args));
+	}
+}
+
+/**
+ * Transition to the current state (i.e repeat it).
+ */
+NobleMachine.prototype.toRepeat = function() {
+	me.toState(me, [me.stateIndex].concat(Array.prototype.slice.call(arguments)));
+}
+
+/**
  * Transition straight to completion.
  */
 NobleMachine.prototype.toComplete = function() {
