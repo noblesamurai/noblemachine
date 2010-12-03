@@ -277,7 +277,7 @@ NobleMachine.prototype.toError = function() {
 }
 
 /**
- * Emit success event and mark machine as running.
+ * Emit success event and mark machine as finished.
  */
 NobleMachine.prototype.emitSuccess = function() {
 	this.running = false;
@@ -286,7 +286,7 @@ NobleMachine.prototype.emitSuccess = function() {
 }
 
 /** 
- * Emit error event and mark machine as running.
+ * Emit error event and mark machine as finished.
  */
 NobleMachine.prototype.emitError = function() {
 	this.running = false;
