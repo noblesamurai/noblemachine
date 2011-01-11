@@ -25,7 +25,7 @@ A NobleMachine is divided into states, which are defined by (generally anonymous
 
 ## chaining
 
-When passed another NobleMachine, the state transition functions will automatically execute that machine prior to the transition. Whatever output is passed from the final state will be treated as input to the parent machine.
+When passed another NobleMachine, the state transition functions will automatically execute that machine prior to the transition. Whatever output is passed from the final state will be treated as input to the following state of the parent machine.
 
 	function readDirAct(path) {
 		return new NobleMachine().next.wait(function() {
