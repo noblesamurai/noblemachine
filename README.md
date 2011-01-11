@@ -1,5 +1,5 @@
 # noblemachine
-##### <span style="color: #333">a framework for amicable asynchronous coding</span> 
+##### <span style="color: #333">a framework for amicable asynchronous coding with nodeJS</span> 
 
 ## introduction
 
