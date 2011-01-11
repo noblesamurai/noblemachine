@@ -61,6 +61,7 @@ var NobleMachine = function(funcOrAct) {
 	 */
 	function addState(name, funcOrAct) {
 		me.handlers[name] = me.makeHandler(funcOrAct);
+		return me;
 	}
 
 	/**
@@ -69,13 +70,14 @@ var NobleMachine = function(funcOrAct) {
 	function nextState(name, funcOrAct) {
 		me.addState(name, funcOrAct);
 		me.stateSequence.push(name);
+		return me;
 	}
 
 	/**
 	 * Add an unnamed state at the next position in the main sequence.
 	 */
 	function next(funcOrAct) {
-		me.nextState("state" + this.stateSequence.length, funcOrAct);
+		return me.nextState("state" + me.stateSequence.length, funcOrAct);
 	}
 
 	/**
@@ -154,8 +156,6 @@ var NobleMachine = function(funcOrAct) {
 	 * Add a state transition involving an action and success/error response states.
 	 */
 	function transition(opts) {
-		var e = this;
-
 		opts = opts || {};
 		opts.error = opts.error || 'error';
 		opts.success = opts.success || 'complete';
@@ -191,7 +191,7 @@ var NobleMachine = function(funcOrAct) {
 		if (args.length == 0) {
 			me.runState(state);
 		} else if (args[0] && args[0].start instanceof Function) {
-			me.transition({ action: actOrVar, success: state, argdata: args.slice(1) });
+			me.transition({ action: args[0], success: state, argdata: args.slice(1) });
 		} else {
 			me.runState(state, args);
 		}
@@ -236,7 +236,7 @@ var NobleMachine = function(funcOrAct) {
 	 * Transition straight to completion.
 	 */
 	function toComplete() {
-		me.toState.apply(this, ['complete'].concat(
+		me.toState.apply(me, ['complete'].concat(
 			Array.prototype.slice.call(arguments)));
 	}
 
@@ -244,7 +244,7 @@ var NobleMachine = function(funcOrAct) {
 	 * Transition to error handler.
 	 */
 	function toError() {
-		me.toState.apply(this, ['error'].concat(
+		me.toState.apply(me, ['error'].concat(
 			Array.prototype.slice.call(arguments)));
 	}
 
@@ -272,9 +272,9 @@ var NobleMachine = function(funcOrAct) {
 		 me[funcName] = eval(funcName);
 	});
 
-	me.next.wait = function(handler) {
+	me.next.wait = me.nextState.wait = me.addState.wait = function(handler) {
 		handler.wait = true;
-		me.next(handler);
+		return this(handler);
 	}
 
 	me.addState('complete', function() {
@@ -284,7 +284,7 @@ var NobleMachine = function(funcOrAct) {
 
 		me.onExit();
 
-		if (!me.completeHandler) {
+		if (me.running && !me.completeHandler) {
 			me.emitSuccess.apply(me, arguments);
 		}
 	});
