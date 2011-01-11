@@ -35,6 +35,10 @@ var NobleMachine = function(funcOrAct) {
 		});
 	}
 
+	function arrify(args) {
+		return Array.prototype.slice.call(args);
+	}
+
 	/**
 	 * Internal function, converts a function or action into a state handler function.
 	 */
@@ -45,9 +49,9 @@ var NobleMachine = function(funcOrAct) {
 			if (funcOrAct === undefined) {
 				me.toNext();
 			} else if (funcOrAct instanceof Function) {
-				funcOrAct.apply(me, arguments);
+				funcOrAct.apply(me, arrify(arguments));
 
-				if (!funcOrAct.wait && me.state == state && !me.transitioning && me.running)  {
+				if (!funcOrAct.wait && me.state == state && !me.transitioning && me.running) {
 					me.toNext();
 				}
 			} else {
@@ -169,12 +173,12 @@ var NobleMachine = function(funcOrAct) {
 
 		act.addListener('success', function() {
 			me.transitioning = false;
-			me.runState(opts.success, (opts.argdata||[]).concat(arguments));
+			me.runState(opts.success, (opts.argdata||[]).concat(arrify(arguments)));
 		});
 
 		act.addListener('error', function() {
 			me.transitioning = false;
-			me.runState(opts.error, arguments);
+			me.runState(opts.error, arrify(arguments));
 		});
 
 		me.transitioning = true;
@@ -202,7 +206,7 @@ var NobleMachine = function(funcOrAct) {
 	 */
 	function toNext() {
 		var nextState = me.stateIndex+1;
-		var args = Array.prototype.slice.call(arguments);
+		var args = arrify(arguments);
 
 		if (nextState < me.stateSequence.length) {
 			me.toState.apply(me, [nextState].concat(args));
@@ -216,7 +220,7 @@ var NobleMachine = function(funcOrAct) {
 	 */
 	function toPrev() {
 		var nextState = me.stateIndex-1;
-		var args = Array.prototype.slice.call(arguments);
+		var args = arrify(arguments);
 
 		if (nextState < 0) {
 			me.toError("Tried to transition earlier than the first state?!");
@@ -229,7 +233,7 @@ var NobleMachine = function(funcOrAct) {
 	 * Transition to the current state (i.e repeat it).
 	 */
 	function toRepeat() {
-		me.toState(me, [me.stateIndex].concat(Array.prototype.slice.call(arguments)));
+		me.toState(me, [me.stateIndex].concat(arrify(arguments)));
 	}
 
 	/**
@@ -237,7 +241,7 @@ var NobleMachine = function(funcOrAct) {
 	 */
 	function toComplete() {
 		me.toState.apply(me, ['complete'].concat(
-			Array.prototype.slice.call(arguments)));
+			arrify(arguments)));
 	}
 
 	/**
@@ -245,7 +249,7 @@ var NobleMachine = function(funcOrAct) {
 	 */
 	function toError() {
 		me.toState.apply(me, ['error'].concat(
-			Array.prototype.slice.call(arguments)));
+			arrify(arguments)));
 	}
 
 	/**
@@ -254,7 +258,7 @@ var NobleMachine = function(funcOrAct) {
 	function emitSuccess() {
 		me.running = false;
 		me.emit.apply(me, ['success'].concat(
-			Array.prototype.slice.call(arguments)));
+			arrify(arguments)));
 	}
 
 	/** 
@@ -263,7 +267,7 @@ var NobleMachine = function(funcOrAct) {
 	function emitError() {
 		me.running = false;
 		me.emit.apply(me, ['error'].concat(
-			Array.prototype.slice.call(arguments)));
+			arrify(arguments)));
 	}
 
 	['makeHandler', 'addState', 'nextState', 'next', 'complete', 'error', 'ensure', 'onExit', 'findState', 'go', 
@@ -279,25 +283,25 @@ var NobleMachine = function(funcOrAct) {
 
 	me.addState('complete', function() {
 		if (me.completeHandler) {
-			me.completeHandler.apply(me, arguments);
+			me.completeHandler.apply(me, arrify(arguments));
 		} 
 
 		me.onExit();
 
 		if (me.running && !me.completeHandler) {
-			me.emitSuccess.apply(me, arguments);
+			me.emitSuccess.apply(me, arrify(arguments));
 		}
 	});
 
 	me.addState('error', function() {
 		if (me.errorHandler) {
-			me.errorHandler.apply(me, arguments);
+			me.errorHandler.apply(me, arrify(arguments));
 		}
 
 		me.onExit();
 
 		if (!me.errorHandler) {
-			me.emitError.apply(me, arguments);
+			me.emitError.apply(me, arrify(arguments));
 		}
 	});
 
