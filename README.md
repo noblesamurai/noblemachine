@@ -9,7 +9,7 @@ Standard callback-based asynchronous programming is sufficient for small operati
 
 	var NobleMachine = require('noblemachine').NobleMachine;
 
-A NobleMachine is divided into states, which are defined by (generally anonymous) functions. When the machine is run, the state handlers are executed in the sequence of their addition unless an individual handler specifies otherwise. Handlers can be set to wait for a manual transition at the point of creation using next.wait.
+A NobleMachine is divided into states, which are defined by (generally anonymous) functions. When the machine is run, the state handlers are executed by default in the sequence of their addition. Handlers can be set to wait for a manual transition at the point of creation using next.wait; else the machine will proceed automatically if it does not detect a transition call.
 
 	var act = new NobleMachine();
 
@@ -92,14 +92,6 @@ The 'ensure' function adds a handler that will be run on machine exit regardless
 	act.ensure(function() {
 		db.close();
 	});
-
-
-
-
-
-
-
-
 
 ## contributors
  - [Daniel Assange](http://github.com/somnidea)
