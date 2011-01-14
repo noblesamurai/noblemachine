@@ -21,7 +21,7 @@ var sys = require('sys'),
 /**
  * Hybrid linear queue/state machine.
  */
-var NobleMachine = function(funcOrAct) {
+var NobleMachine = function(initialFuncOrAct) {
 	var me = this;
 
 	me.handlers = {};
@@ -305,8 +305,8 @@ var NobleMachine = function(funcOrAct) {
 		}
 	});
 
-	if (funcOrAct !== undefined) {
-		me.next(funcOrAct);
+	if (initialFuncOrAct !== undefined) {
+		me.next(initialFuncOrAct);
 	}
 
 	return me;
