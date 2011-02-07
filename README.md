@@ -95,6 +95,7 @@ The 'ensure' function adds a handler that will be run on machine exit regardless
 
 ## contributors
  - [Daniel Assange](http://github.com/somnidea)
+ - [Arlen Cuss](http://github.com/celtic)
  - You?
 
 ## license
