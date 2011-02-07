@@ -233,7 +233,7 @@ var NobleMachine = function(initialFuncOrAct) {
 	 * Transition to the current state (i.e repeat it).
 	 */
 	function toRepeat() {
-		me.toState(me, [me.stateIndex].concat(arrify(arguments)));
+		me.toState.apply(me, [me.stateIndex].concat(arrify(arguments)));
 	}
 
 	/**
