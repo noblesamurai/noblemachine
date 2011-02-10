@@ -93,9 +93,20 @@ The 'ensure' function adds a handler that will be run on machine exit regardless
 		db.close();
 	});
 
+## installation
+
+Noble Machine is also made available as an npm package. To install:
+
+	npm install noblemachine
+
+To use Noble Machine from the npm package do:
+
+	var NobleMachine = require('noblemachine').NobleMachine;
+
 ## contributors
  - [Daniel Assange](http://github.com/somnidea)
  - [Arlen Cuss](http://github.com/celtic)
+ - [Eugene Ware](http://eugeneware.com)
  - You?
 
 ## license
