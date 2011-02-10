@@ -1,0 +1,13 @@
+{
+	"name"			: "noblemachine",
+	"version"		: "v1.0.0",
+	"description"	: "NodeJS implementation of a finite-state machine with added conventions to make asynchronous coding less painful",
+	"homepage"		: "http://github.com/noblesamurai/noblemachine",
+	"keywords"		: ["async", "asynchronous", "fsm", "state machine", "state-machine", "flow-control", "flow control"],
+	"author"        : "Arlen Cuss <arlen@noblesamurai.com>",
+	"maintainers"   : ["Eugene Ware <eugene@noblesamurai.com>"],
+	"licenses"      : ["MIT"],
+    "dependencies"  : [],
+	"main"			: "./noblemachine",
+	"repository"	: { "type": "git", "url": "http://github.com/noblesamurai/noblemachine.git" }
+}
