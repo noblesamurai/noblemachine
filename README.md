@@ -104,8 +104,8 @@ To use Noble Machine from the npm package do:
 	var NobleMachine = require('noblemachine').NobleMachine;
 
 ## contributors
- - [Daniel Assange](http://github.com/somnidea)
- - [Arlen Cuss](http://github.com/celtic)
+ - [Daniel Assange](http://github.com/somnidea) (link defunct)
+ - [Anneli Cuss](http://github.com/celtic)
  - [Eugene Ware](http://eugeneware.com)
  - You?
 
