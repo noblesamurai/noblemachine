@@ -1,21 +1,21 @@
 /**
  * Copyright 2010 Noble Samurai
- * 
+ *
  * NobleMachine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * NobleMachine is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with NobleMachine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var sys = require('sys'),
+var util = require('util'),
 	events = require('events');
 
 /**
@@ -150,7 +150,7 @@ var NobleMachine = function(initialFuncOrAct) {
 
 
 		if (args) {
-			me.go(args);	
+			me.go(args);
 		} else {
 			me.go();
 		}
@@ -261,7 +261,7 @@ var NobleMachine = function(initialFuncOrAct) {
 			arrify(arguments)));
 	}
 
-	/** 
+	/**
 	 * Emit error event and mark machine as finished.
 	 */
 	function emitError() {
@@ -270,8 +270,8 @@ var NobleMachine = function(initialFuncOrAct) {
 			arrify(arguments)));
 	}
 
-	['makeHandler', 'addState', 'nextState', 'next', 'complete', 'error', 'ensure', 'onExit', 'findState', 'go', 
-	 'runState', 'transition', 'toState', 'toNext', 'toPrev', 'toRepeat', 'toComplete', 'toError', 'emitSuccess', 
+	['makeHandler', 'addState', 'nextState', 'next', 'complete', 'error', 'ensure', 'onExit', 'findState', 'go',
+	 'runState', 'transition', 'toState', 'toNext', 'toPrev', 'toRepeat', 'toComplete', 'toError', 'emitSuccess',
 	 'emitError'].forEach(function(funcName) {
 		 me[funcName] = eval(funcName);
 	});
@@ -284,7 +284,7 @@ var NobleMachine = function(initialFuncOrAct) {
 	me.addState('complete', function() {
 		if (me.completeHandler) {
 			me.completeHandler.apply(me, arrify(arguments));
-		} 
+		}
 
 		me.onExit();
 
@@ -312,8 +312,8 @@ var NobleMachine = function(initialFuncOrAct) {
 	return me;
 }
 
-sys.inherits(NobleMachine, events.EventEmitter);
+util.inherits(NobleMachine, events.EventEmitter);
 
-NobleMachine.logger = { log: sys.log, warning: sys.log, error: sys.log };
+NobleMachine.logger = { log: util.log, warning: util.log, error: util.log };
 
 exports.NobleMachine = NobleMachine;
