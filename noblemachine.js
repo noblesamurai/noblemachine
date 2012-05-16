@@ -15,7 +15,7 @@
  * along with NobleMachine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var sys = require('sys'),
+var util = require('util'),
 	events = require('events');
 
 /**
@@ -312,8 +312,8 @@ var NobleMachine = function(initialFuncOrAct) {
 	return me;
 }
 
-sys.inherits(NobleMachine, events.EventEmitter);
+util.inherits(NobleMachine, events.EventEmitter);
 
-NobleMachine.logger = { log: sys.log, warning: sys.log, error: sys.log };
+NobleMachine.logger = { log: util.log, warning: util.log, error: util.log };
 
 exports.NobleMachine = NobleMachine;

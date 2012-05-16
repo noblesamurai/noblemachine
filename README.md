@@ -18,7 +18,7 @@ A NobleMachine is divided into states, which are defined by (generally anonymous
 	});
 
 	act.next(function(err, omgfiles) {
-		sys.log(omgfiles);
+		util.log(omgfiles);
 	});
 
 	act.start();
@@ -40,7 +40,7 @@ When passed another NobleMachine, the state transition functions will automatica
 	});
 
 	act.next(function(err, omgfiles) {
-		sys.log(omgfiles);
+		util.log(omgfiles);
 	});
 
 	act.start();
